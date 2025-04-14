@@ -20,6 +20,8 @@ interface Board {
     type: "color" | "image";
     value: string;
   };
+  lastModified?: Date;
+  members?: { id: string; name: string; avatar?: string }[];
 }
 
 interface BoardGridProps {

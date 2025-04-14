@@ -12,6 +12,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import MainBoardCard from "./BoardCard";
 
 interface CardType {
   id: string;
@@ -125,7 +126,7 @@ const BoardList: React.FC<BoardListProps> = ({
       id: "card-1",
       title: "Research competitors",
       description: "Look into main competitors and their features",
-      labels: [{ color: "bg-blue-500", text: "Research" }],
+      labels: [{ color: "bg-blue-500", name: "Research" }],
       dueDate: new Date(Date.now() + 86400000 * 3), // 3 days from now
       members: [
         {
@@ -142,7 +143,7 @@ const BoardList: React.FC<BoardListProps> = ({
       title: "Design homepage mockup",
       coverImage:
         "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=400&q=80",
-      labels: [{ color: "bg-green-500", text: "Design" }],
+      labels: [{ color: "bg-green-500", name: "Design" }],
       members: [
         {
           id: "user-1",
@@ -263,6 +264,17 @@ const BoardList: React.FC<BoardListProps> = ({
             transition={{ duration: 0.2 }}
           >
             <BoardCard
+              id={card.id}
+              title={card.title}
+              description={card.description}
+              labels={card.labels}
+              dueDate={card.dueDate}
+              members={card.members}
+              attachments={card.attachments}
+              checklistItems={card.checklistItems}
+              coverImage={card.coverImage}
+            />
+            <MainBoardCard
               id={card.id}
               title={card.title}
               description={card.description}

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { Plus, Search, Star, Settings, Bell, User } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { Plus, Search, Star, Settings, Bell, User, Filter } from "lucide-react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import BoardGrid from "./BoardGrid";
+import CreateBoardModal from "./CreateBoardModal";
 
 interface Board {
   id: string;
@@ -22,6 +23,9 @@ interface Board {
 }
 
 const Home = () => {
+  const navigate = useNavigate();
+  const [createModalOpen, setCreateModalOpen] = useState(false);
+
   // Mock data for boards
   const [boards, setBoards] = useState<Board[]>([
     {
@@ -61,6 +65,35 @@ const Home = () => {
           : board,
       ),
     );
+  };
+
+  const handleCreateBoard = (boardData: {
+    title: string;
+    visibility: "private" | "team" | "public";
+    background: {
+      type: "color" | "image";
+      value: string;
+    };
+  }) => {
+    const newBoard: Board = {
+      id: `board-${Date.now()}`,
+      title: boardData.title,
+      background: boardData.background.value,
+      isStarred: false,
+      visibility: boardData.visibility,
+      lastModified: new Date(),
+    };
+
+    setBoards([newBoard, ...boards]);
+
+    // Navigate to the new board
+    setTimeout(() => {
+      navigate(`/board/${newBoard.id}`);
+    }, 300);
+  };
+
+  const handleBoardClick = (boardId: string) => {
+    navigate(`/board/${boardId}`);
   };
 
   return (
@@ -134,10 +167,16 @@ const Home = () => {
         {/* Page Header */}
         <div className="flex items-center justify-between mb-8">
           <h1 className="text-2xl font-bold text-gray-800">Your Boards</h1>
-          <Button>
+          <Button onClick={() => setCreateModalOpen(true)}>
             <Plus className="mr-2 h-4 w-4" /> Create New Board
           </Button>
         </div>
+
+        <CreateBoardModal
+          open={createModalOpen}
+          onOpenChange={setCreateModalOpen}
+          onCreateBoard={handleCreateBoard}
+        />
 
         {/* Boards Section */}
         <div className="mb-12">
@@ -150,6 +189,8 @@ const Home = () => {
             <BoardGrid
               boards={boards.filter((board) => board.isStarred)}
               onToggleStar={toggleStar}
+              onBoardClick={handleBoardClick}
+              onCreateBoard={() => setCreateModalOpen(true)}
             />
           ) : (
             <div className="bg-white rounded-lg border border-gray-200 p-6 text-center">
@@ -166,7 +207,12 @@ const Home = () => {
           </h2>
 
           {boards.length > 0 ? (
-            <BoardGrid boards={boards} onToggleStar={toggleStar} />
+            <BoardGrid
+              boards={boards}
+              onToggleStar={toggleStar}
+              onBoardClick={handleBoardClick}
+              onCreateBoard={() => setCreateModalOpen(true)}
+            />
           ) : (
             <div className="bg-white rounded-lg border border-gray-200 p-12 text-center">
               <div className="max-w-md mx-auto">
@@ -177,7 +223,7 @@ const Home = () => {
                   A board is where your projects come to life. Create tasks,
                   organize workflows, and collaborate with your team.
                 </p>
-                <Button size="lg">
+                <Button size="lg" onClick={() => setCreateModalOpen(true)}>
                   <Plus className="mr-2 h-4 w-4" /> Create Board
                 </Button>
               </div>
