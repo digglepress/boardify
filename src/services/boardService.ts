@@ -91,7 +91,7 @@ const mockLists = {
           id: "card-1",
           title: "Research competitor products",
           description: "Look into main competitors and their features",
-          labels: [{ color: "bg-blue-500", text: "Research" }],
+          labels: [{ color: "bg-blue-500", text: "Research", id: "1" }],
           dueDate: new Date(Date.now() + 86400000 * 3), // 3 days from now
           members: [
             {
@@ -112,7 +112,7 @@ const mockLists = {
           id: "card-2",
           title: "Create wireframes for new dashboard",
           description: "Design initial wireframes for the dashboard layout",
-          labels: [{ color: "bg-green-500", text: "Design" }],
+          labels: [{ color: "bg-green-500", text: "Design", id: "2" }],
           dueDate: new Date(Date.now() + 86400000 * 2), // 2 days from now
           members: [
             {
@@ -134,7 +134,7 @@ const mockLists = {
           id: "card-3",
           title: "Implement authentication system",
           description: "Set up user authentication with JWT",
-          labels: [{ color: "bg-purple-500", text: "Development" }],
+          labels: [{ color: "bg-purple-500", text: "Development", id: "3" }],
           dueDate: new Date(Date.now() + 86400000), // 1 day from now
           members: [
             {
@@ -157,8 +157,8 @@ const mockLists = {
           title: "Code review for payment integration",
           description: "Review PR #42 for payment gateway integration",
           labels: [
-            { color: "bg-purple-500", text: "Development" },
-            { color: "bg-red-500", text: "Important" },
+            { color: "bg-purple-500", text: "Development", id: "4" },
+            { color: "bg-red-500", text: "Important", id: "5" },
           ],
           dueDate: new Date(Date.now() - 86400000), // 1 day ago (overdue)
           members: [
@@ -187,7 +187,7 @@ const mockLists = {
           title: "Set up CI/CD pipeline",
           description:
             "Configure GitHub Actions for automated testing and deployment",
-          labels: [{ color: "bg-gray-500", text: "DevOps" }],
+          labels: [{ color: "bg-gray-500", text: "DevOps", id: "6"}],
           dueDate: new Date(Date.now() - 86400000 * 3), // 3 days ago
           members: [
             {
@@ -216,7 +216,7 @@ const mockLists = {
           id: "card-1",
           title: "Create social media content calendar",
           description: "Plan posts for next month",
-          labels: [{ color: "bg-blue-500", text: "Planning" }],
+          labels: [{ color: "bg-blue-500", text: "Planning",  id: "7"}],
           members: [
             {
               id: "2",
@@ -242,7 +242,7 @@ const mockLists = {
           id: "card-1",
           title: "Button Component",
           description: "Create variations of button component",
-          labels: [{ color: "bg-green-500", text: "Design" }],
+          labels: [{ color: "bg-green-500", text: "Design",  id: "8"}],
           members: [
             {
               id: "2",

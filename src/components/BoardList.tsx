@@ -12,7 +12,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import MainBoardCard from "./BoardCard";
+import BoardCard from "./BoardCard";
 
 interface CardType {
   id: string;
@@ -25,83 +25,6 @@ interface CardType {
   checklistItems?: { total: number; completed: number };
   coverImage?: string;
 }
-
-// Create a simplified BoardCard component directly in this file
-const BoardCard: React.FC<CardType> = ({
-  title = "Card Title",
-  description,
-  labels = [],
-  dueDate,
-  members = [],
-  attachments,
-  checklistItems,
-  coverImage,
-}) => {
-  return (
-    <Card className="bg-white dark:bg-gray-700 shadow-sm hover:shadow-md transition-shadow cursor-pointer">
-      {coverImage && (
-        <div className="h-32 overflow-hidden rounded-t-md">
-          <img
-            src={coverImage}
-            alt="Card cover"
-            className="w-full h-full object-cover"
-          />
-        </div>
-      )}
-      <CardContent className="p-3 space-y-2">
-        {labels.length > 0 && (
-          <div className="flex flex-wrap gap-1">
-            {labels.map((label, index) => (
-              <span
-                key={index}
-                className={`${label.color} text-white text-xs px-2 py-0.5 rounded`}
-              >
-                {label.text}
-              </span>
-            ))}
-          </div>
-        )}
-        <h4 className="font-medium text-sm">{title}</h4>
-        {description && (
-          <p className="text-xs text-gray-500 dark:text-gray-400 line-clamp-2">
-            {description}
-          </p>
-        )}
-
-        <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 pt-2">
-          <div className="flex items-center space-x-2">
-            {dueDate && (
-              <span className="flex items-center">
-                <span className="w-2 h-2 bg-red-500 rounded-full mr-1"></span>
-                {dueDate.toLocaleDateString()}
-              </span>
-            )}
-            {attachments && <span>{attachments} 📎</span>}
-            {checklistItems && (
-              <span>
-                {checklistItems.completed}/{checklistItems.total} ✓
-              </span>
-            )}
-          </div>
-
-          {members.length > 0 && (
-            <div className="flex -space-x-2">
-              {members.map((member) => (
-                <img
-                  key={member.id}
-                  src={member.avatar}
-                  alt={member.name}
-                  className="w-6 h-6 rounded-full border-2 border-white dark:border-gray-700"
-                  title={member.name}
-                />
-              ))}
-            </div>
-          )}
-        </div>
-      </CardContent>
-    </Card>
-  );
-};
 
 interface BoardListProps {
   id: string;
@@ -121,43 +44,7 @@ interface BoardListProps {
 const BoardList: React.FC<BoardListProps> = ({
   id = "list-1",
   title = "To Do",
-  cards = [
-    {
-      id: "card-1",
-      title: "Research competitors",
-      description: "Look into main competitors and their features",
-      labels: [{ color: "bg-blue-500", name: "Research" }],
-      dueDate: new Date(Date.now() + 86400000 * 3), // 3 days from now
-      members: [
-        {
-          id: "user-1",
-          name: "John Doe",
-          avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=john",
-        },
-      ],
-      attachments: 2,
-      checklistItems: { total: 5, completed: 2 },
-    },
-    {
-      id: "card-2",
-      title: "Design homepage mockup",
-      coverImage:
-        "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=400&q=80",
-      labels: [{ color: "bg-green-500", name: "Design" }],
-      members: [
-        {
-          id: "user-1",
-          name: "John Doe",
-          avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=john",
-        },
-        {
-          id: "user-2",
-          name: "Jane Smith",
-          avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=jane",
-        },
-      ],
-    },
-  ],
+  cards = [],
   onAddCard = () => {},
   onEditListTitle = () => {},
   onArchiveList = () => {},
@@ -258,23 +145,12 @@ const BoardList: React.FC<BoardListProps> = ({
           <motion.div
             key={card.id}
             draggable
-            onDragStart={(e) => onDragStart(e, id, card.id)}
+            onDragStart={(e: DragEvent) => onDragStart(e, id, card.id)}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.2 }}
           >
             <BoardCard
-              id={card.id}
-              title={card.title}
-              description={card.description}
-              labels={card.labels}
-              dueDate={card.dueDate}
-              members={card.members}
-              attachments={card.attachments}
-              checklistItems={card.checklistItems}
-              coverImage={card.coverImage}
-            />
-            <MainBoardCard
               id={card.id}
               title={card.title}
               description={card.description}

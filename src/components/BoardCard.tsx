@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import {
   Calendar,
-  Clock,
   Paperclip,
   CheckSquare,
   MessageSquare,
@@ -21,7 +20,7 @@ import CardDetailModal from "./CardDetailModal";
 
 interface Label {
   id: string;
-  name: string;
+  text: string;
   color: string;
 }
 
@@ -149,9 +148,9 @@ const BoardCard = ({
                 {labels.map((label) => (
                   <Badge
                     key={label.id}
-                    className={`px-2 py-0.5 text-xs font-medium bg-${label.color}-100 text-${label.color}-800 hover:bg-${label.color}-200 transition-all duration-300 hover:scale-105`}
+                    className={`px-2 py-0.5 rounded text-xs font-medium ${label.color} text-white hover:bg transition-all duration-300 hover:scale-105`}
                   >
-                    {label.name}
+                    {label.text}
                   </Badge>
                 ))}
               </div>
@@ -201,7 +200,6 @@ const BoardCard = ({
                     <span>{attachments}</span>
                   </div>
                 )}
-
                 {/* Comments */}
                 {comments > 0 && (
                   <div className="flex items-center text-xs text-gray-600">
@@ -210,12 +208,11 @@ const BoardCard = ({
                   </div>
                 )}
               </div>
-
               {/* Members */}
               {members.length > 0 && (
                 <div className="flex -space-x-2">
                   <TooltipProvider>
-                    {members.slice(0, 3).map((member, index) => (
+                    {members.slice(0, 3).map((member) => (
                       <Tooltip key={member.id}>
                         <TooltipTrigger asChild>
                           <Avatar className="h-6 w-6 border-2 border-white transition-transform duration-200 hover:scale-110 hover:z-10">

@@ -25,7 +25,7 @@ import {
 
 interface Label {
   id: string;
-  name: string;
+  text: string;
   color: string;
 }
 
@@ -160,9 +160,9 @@ const CardDetailModal = ({
               {labels.map((label) => (
                 <Badge
                   key={label.id}
-                  className={`px-3 py-1 text-xs font-medium bg-${label.color}-100 text-${label.color}-800 hover:bg-${label.color}-200`}
+                  className={`px-3 py-1 text-xs font-medium ${label.color} text-white hover:bg-${label.color}-200`}
                 >
-                  {label.name}
+                  {label.text}
                 </Badge>
               ))}
             </div>
